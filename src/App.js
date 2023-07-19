@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {useState} from 'react';
 function App() {
-  cost [newItem,setNewItem]=useState("")
+  const [newItem,setNewItem]=useState("")
   function handleSubmit(e){
     console.log('submited')
   }
