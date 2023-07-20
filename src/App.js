@@ -4,9 +4,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {useState} from 'react';
 function App() {
   const [newItem,setNewItem]=useState("")
+  const [todos,setTodos]=useState([])
   function handleSubmit(e){
-    console.log('submited')
+    console.log('test');
+    e.preventDefault();
+    setTodos(currtentTods=>{
+      return [
+        ...currtentTods
+        ,{id:crypto.randomUUID(),isCompleted:false,title:newItem}
+      ]
+    })
   }
+  console.log(todos);
   return (
     <>
     <div className='container'>
@@ -22,17 +31,22 @@ function App() {
         <button className='btn btn-primary'>Add</button>
       </form>
       <h1>ToDos List</h1>
-      <div className='list-group'>
-        <li className='list-group-item w-25'>
-          <label>
-            <input type="checkbox"/>
-            item 1
-          </label>
-          <button className='btn btn-danger'>Delete</button>
-
-        </li>
+      <ul className='list-group'>
+        {todos.map(todo=>{
+                  return (
+                  <li className='list-group-item w-25'>
+                  <label>
+                    <input type="checkbox" checked={todo.isCompleted}/>
+                    {todo.title}
+                  </label>
+                  <button className='btn btn-danger'>Delete</button>
         
-      </div>
+                </li>
+                )
+        })}
+
+        
+      </ul>
     </div>
 
     </>
