@@ -6,7 +6,6 @@ function App() {
   const [newItem,setNewItem]=useState("")
   const [todos,setTodos]=useState([])
   function handleSubmit(e){
-    console.log('test');
     e.preventDefault();
     setTodos(currtentTods=>{
       return [
@@ -14,8 +13,26 @@ function App() {
         ,{id:crypto.randomUUID(),isCompleted:false,title:newItem}
       ]
     })
+    setNewItem("")
   }
-  console.log(todos);
+  function toggleTodo(id,isCompleted){
+    console.log(isCompleted);
+    setTodos(currtentTods=>{
+      return currtentTods.map(todo=>{
+        if(todo.id===id){
+          return {...todo,isCompleted}
+        }
+        return todo
+      })
+    })
+  }
+  function deleteTodos(id){
+    
+    setTodos(currtentTods=>{
+      return currtentTods.filter(todo=>todo.id !=id)
+    })
+  }
+ 
   return (
     <>
     <div className='container'>
@@ -34,12 +51,12 @@ function App() {
       <ul className='list-group'>
         {todos.map(todo=>{
                   return (
-                  <li className='list-group-item w-25'>
+                  <li className='list-group-item w-25' key={todo.id}>
                   <label>
-                    <input type="checkbox" checked={todo.isCompleted}/>
+                    <input type="checkbox" checked={todo.isCompleted} onChange={e=>toggleTodo(todo.id,e.target.checked)}/>
                     {todo.title}
                   </label>
-                  <button className='btn btn-danger'>Delete</button>
+                  <button className='btn btn-danger' onClick={()=>deleteTodos(todo.id)}>Delete</button>
         
                 </li>
                 )
