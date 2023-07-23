@@ -1,14 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NewTodoForm from './NewTodoForm.js';
 import TodoLIst from './TodoList';
 
 
 function App() {
 
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(()=>{
+    const localValue=localStorage.getItem("ITEMS")
+    if (localValue==null) return []
+    return JSON.parse(localValue)
+
+  })
+
+  useEffect(()=>{
+    localStorage.setItem("ITEMS",JSON.stringify(todos))
+  },[todos])
 
   function toggleTodo(id, isCompleted) {
     
